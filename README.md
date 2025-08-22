@@ -1,1 +1,1 @@
-# Intelligent-Data-Management
+This project builds a data warehouse using the COVID-19 country-wise dataset. It supports decision-making using a relational database (MySQL) and two NoSQL databases (MongoDB and Neo4j). It also uses Docker for setup and Kafka for real-time data streaming.

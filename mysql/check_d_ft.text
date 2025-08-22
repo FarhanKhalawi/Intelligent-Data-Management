@@ -1,0 +1,48 @@
+-- Check Country Dimension
+SELECT * FROM Country LIMIT 5;
+
+-- Check Fact Table
+SELECT 
+    c.Country_Name, f.Confirmed, f.Deaths, f.Recovered 
+FROM COVID_Facts f
+JOIN Country c ON f.CountryID = c.CountryID
+LIMIT 5;
+
+
+
+#################################################################
+
+-- Dimension: Country
+CREATE TABLE Country (
+    CountryID INT AUTO_INCREMENT PRIMARY KEY,
+    Country_Name VARCHAR(100) NOT NULL,
+    WHO_Region VARCHAR(50) NOT NULL
+);
+
+-- Dimension: Time (single snapshot, as the dataset lacks historical dates)
+CREATE TABLE Time (
+    TimeID INT AUTO_INCREMENT PRIMARY KEY,
+    Date DATE DEFAULT '2023-07-01'  -- Assumed snapshot date
+);
+
+-- Fact Table: COVID Metrics
+CREATE TABLE COVID_Facts (
+    FactID INT AUTO_INCREMENT PRIMARY KEY,
+    CountryID INT,
+    TimeID INT,
+    Confirmed INT,
+    Deaths INT,
+    Recovered INT,
+    Active INT,
+    New_cases INT,
+    New_deaths INT,
+    New_recovered INT,
+    Deaths_per_100_cases FLOAT,
+    Recovered_per_100_cases FLOAT,
+    Deaths_per_100_recovered FLOAT,
+    Confirmed_last_week INT,
+    One_week_change INT,
+    One_week_percent_increase FLOAT,
+    FOREIGN KEY (CountryID) REFERENCES Country(CountryID),
+    FOREIGN KEY (TimeID) REFERENCES Time(TimeID)
+);
